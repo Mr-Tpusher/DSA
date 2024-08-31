@@ -1,2 +1,7 @@
 #Compiled binaries
 /target
+
+#code editor folders
+/.idea
+/.vscode
+*.iml
