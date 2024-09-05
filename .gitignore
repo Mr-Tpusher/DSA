@@ -1,5 +1,6 @@
 #Compiled binaries
 /target
+/out
 
 #code editor folders
 /.idea
