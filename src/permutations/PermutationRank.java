@@ -1,4 +1,4 @@
-package backtracking;
+package permutations;
 /*
 * Given a permutation, give it's rank.
 * */
