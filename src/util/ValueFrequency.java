@@ -1,6 +1,7 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ValueFrequency {
 
@@ -28,8 +29,9 @@ public class ValueFrequency {
         this.frequency = frequency;
     }
 
-    public static ArrayList<ValueFrequency> generateValueFrequency(int[] A) {
-
+    public static ArrayList<ValueFrequency> generateValueFrequency(int[] Arr) {
+        int[] A = Arrays.copyOf(Arr, Arr.length);
+        Arrays.sort(A);
         ArrayList<ValueFrequency> vfList = new ArrayList<>();
 
         if (A.length == 0) {
