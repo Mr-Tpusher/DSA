@@ -14,15 +14,19 @@ public class InsertionSort1 {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Enter next element: ");
+            System.out.println("Enter next element(or press n to quit): ");
             String s = scanner.nextLine();
             System.out.println(s);
             if (s.equalsIgnoreCase("n")) {
                 break;
             } else {
-                int n = Integer.parseInt(s);
-                System.out.println("parsed Int:" + n);
-                sort(numbers, n);
+                try {
+                    int n = Integer.parseInt(s);
+                    System.out.println("parsed Int:" + n);
+                    sort(numbers, n);
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid Input : " + s);
+                }
             }
             System.out.println(numbers);
         }
