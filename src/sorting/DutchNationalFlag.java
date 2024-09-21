@@ -35,6 +35,9 @@ public class DutchNationalFlag {
     }
 
     public static void solve(int[] A) {
+        // All the 0s will lie on left side of the left
+        // All the 1s lie in between left and right
+        // All the 2s lie on right side of the right
         int left = 0, right = A.length - 1;
         int curr = 0;
 
