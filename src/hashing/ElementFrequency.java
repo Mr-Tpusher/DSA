@@ -16,8 +16,24 @@ public class ElementFrequency {
         System.out.println(Arrays.toString(bruteForce1(A, queries)));
         System.out.println(Arrays.toString(bruteForce2(A, queries)));
         System.out.println(Arrays.toString(freqUsingHashing1(A, queries)));
+        System.out.println(Arrays.toString(elementFreqUsingMap(A, queries)));
     }
 
+    public static int[] elementFreqUsingMap(int[] A, int[] queries) {
+        HashMap<Integer, Integer> frequencies = new HashMap<>();
+        for (int i : A) {
+            int currFreq = frequencies.getOrDefault(i , 0);
+            frequencies.put(i, ++currFreq);
+        }
+        int[] output = new int[queries.length];
+        int k = 0;
+        for (int q : queries) {
+            output[k++] = frequencies.getOrDefault(q, 0);
+        }
+        return output;
+    }
+
+    // Typical two iterations brute force
     public static int[] bruteForce1(int[] A, int[] queries) {
         int[] output = new int[queries.length];
         for (int i = 0; i < queries.length; i++) {
@@ -32,6 +48,10 @@ public class ElementFrequency {
         return output;
     }
 
+    /*  Sort the array first and then
+    * * Find first occurrence and last occurrence using binary search
+    *   freq = lastOcc - firstOcc + 1
+    */
     public static int[] bruteForce2(int[] A, int[] queries) {
         Arrays.sort(A);
         int[] output = new int[queries.length];
@@ -81,6 +101,11 @@ public class ElementFrequency {
         return lastOccurrence;
     }
 
+    /*
+    * Another brute force kind of approach where two hashmaps are used to store
+    * first and last occurrence and then calculate frequency using
+    * freq = lastOcc - firstOcc + 1
+     * */
     public static int[] freqUsingHashing1(int[] A, int[] queries) {
         HashMap<Integer, Integer> firstOcc = new HashMap<>();
         HashMap<Integer, Integer> lastOcc = new HashMap<>();
@@ -102,5 +127,6 @@ public class ElementFrequency {
         }
         return output;
     }
+
 
 }
