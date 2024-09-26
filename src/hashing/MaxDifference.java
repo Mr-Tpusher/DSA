@@ -12,12 +12,13 @@ public class MaxDifference {
         int[] A = {1, 2, 3, 2, 7, 6, 3, 2, 1};
         System.out.println(bruteForce(A));
         System.out.println(maxDiffUsingTwoHashmaps(A));
+        System.out.println(maxDiffUsingOneHashmap(A));
 
     }
 
     public static int bruteForce(int[] A) {
         if (A.length == 0) {
-            return -1;
+            return 0;
         }
         int max = 0;
         for (int i = 0; i < A.length; i++) {
@@ -34,7 +35,7 @@ public class MaxDifference {
 
     public static int maxDiffUsingTwoHashmaps(int[] A) {
         if (A.length == 0) {
-            return -1;
+            return 0;
         }
         HashMap<Integer, Integer> firstOccurrence = new HashMap<>();
         HashMap<Integer, Integer> lastOccurrence = new HashMap<>();
@@ -51,6 +52,19 @@ public class MaxDifference {
             int first = e.getValue();
             int last = lastOccurrence.get(e.getKey());
             max = Math.max(max, last - first);
+        }
+        return max;
+    }
+
+    public static int maxDiffUsingOneHashmap(int[] A) {
+        HashMap<Integer, Integer> firstOccurrence = new HashMap<>();
+        int max = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (firstOccurrence.containsKey(A[i])) {
+                max = Math.max(max, i - firstOccurrence.get(A[i]));
+            } else {
+                firstOccurrence.put(A[i], i);
+            }
         }
         return max;
     }
