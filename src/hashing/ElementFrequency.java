@@ -1,6 +1,7 @@
 package hashing;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 /*
 * Given an array and multiple queries, in each query you are given a number,
@@ -14,6 +15,7 @@ public class ElementFrequency {
         int[] queries = {1, 2, 3, 4, 5};
         System.out.println(Arrays.toString(bruteForce1(A, queries)));
         System.out.println(Arrays.toString(bruteForce2(A, queries)));
+        System.out.println(Arrays.toString(freqUsingHashing1(A, queries)));
     }
 
     public static int[] bruteForce1(int[] A, int[] queries) {
@@ -78,4 +80,27 @@ public class ElementFrequency {
         }
         return lastOccurrence;
     }
+
+    public static int[] freqUsingHashing1(int[] A, int[] queries) {
+        HashMap<Integer, Integer> firstOcc = new HashMap<>();
+        HashMap<Integer, Integer> lastOcc = new HashMap<>();
+        for (int i = 0; i < A.length; i++) {
+            int currElement = A[i];
+            if (!firstOcc.containsKey(currElement)) {
+                firstOcc.put(currElement, i);
+            }
+            lastOcc.put(currElement, i);
+        }
+
+        int[] output = new int[queries.length];
+        int i = 0;
+        for (int q : queries) {
+            int first = firstOcc.getOrDefault(q, -1);
+            int last = lastOcc.getOrDefault(q, -1);
+            int freq = first == -1 ? 0 : last - first + 1;
+            output[i++] = freq;
+        }
+        return output;
+    }
+
 }
