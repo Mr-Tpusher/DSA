@@ -1,6 +1,8 @@
 package hashing;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
 * Given an array A, find no of pairs in A,
@@ -20,6 +22,20 @@ public class MatchingPairs {
                     pairs++;
                 }
             }
+        }
+        return pairs;
+    }
+
+    public static int matchingPairsUsingMap(int[] A) {
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        for (int i = 0; i < A.length; i++) {
+            int freq = hm.getOrDefault(A[i], 0);
+            hm.put(A[i], ++freq);
+        }
+        int pairs = 0;
+        for (Map.Entry<Integer, Integer> e : hm.entrySet()) {
+            int count = e.getValue();
+            pairs += (count * (count - 1)) / 2;
         }
         return pairs;
     }
@@ -44,7 +60,7 @@ public class MatchingPairs {
         };
 
         for (int i = 0; i < input.length; i++) {
-            int pairs = bruteForce(input[i]);
+            int pairs = matchingPairsUsingMap(input[i]);
             String verdict = expected[i] == pairs ? "Passed" : "Failed";
             System.out.println("Input:" + Arrays.toString(input[i]));
             System.out.println("Expected:" + expected[i] + ", Got:" + pairs);
