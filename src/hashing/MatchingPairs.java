@@ -40,7 +40,7 @@ public class MatchingPairs {
         return pairs;
     }
 
-    public static int matchingPairsUsingMapOnTheFly(int[] A) {
+    public static int countMatchingPairsOnTheFly(int[] A) {
         HashMap<Integer, Integer> hm = new HashMap<>();
         int pairs = 0;
         for (int i = 0; i < A.length; i++) {
@@ -71,7 +71,7 @@ public class MatchingPairs {
         };
 
         for (int i = 0; i < input.length; i++) {
-            int pairs = matchingPairsUsingMapOnTheFly(input[i]);
+            int pairs = countMatchingPairsOnTheFly(input[i]);
             String verdict = expected[i] == pairs ? "Passed" : "Failed";
             System.out.println("Input:" + Arrays.toString(input[i]));
             System.out.println("Expected:" + expected[i] + ", Got:" + pairs);
