@@ -40,6 +40,17 @@ public class MatchingPairs {
         return pairs;
     }
 
+    public static int matchingPairsUsingMapOnTheFly(int[] A) {
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        int pairs = 0;
+        for (int i = 0; i < A.length; i++) {
+            int freq = hm.getOrDefault(A[i], 0);
+            pairs += freq;
+            hm.put(A[i], ++freq);
+        }
+        return pairs;
+    }
+
     public static void test() {
         int[][] input = {
                 {},
@@ -60,7 +71,7 @@ public class MatchingPairs {
         };
 
         for (int i = 0; i < input.length; i++) {
-            int pairs = matchingPairsUsingMap(input[i]);
+            int pairs = matchingPairsUsingMapOnTheFly(input[i]);
             String verdict = expected[i] == pairs ? "Passed" : "Failed";
             System.out.println("Input:" + Arrays.toString(input[i]));
             System.out.println("Expected:" + expected[i] + ", Got:" + pairs);
