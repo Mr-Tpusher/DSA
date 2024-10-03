@@ -2,7 +2,7 @@ package stacks;
 
 public class ArrayStack {
     private int size = 10;
-    private int[] items ;
+    private final int[] items;
     int head = -1;
 
     ArrayStack() {

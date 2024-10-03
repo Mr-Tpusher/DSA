@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Stack<T> {
     private final ArrayList<T> elements;
 
-    Stack() {
-         elements = new ArrayList<>();
+    public Stack() {
+        elements = new ArrayList<>();
     }
 
     public boolean isEmpty() {
@@ -31,6 +31,7 @@ public class Stack<T> {
         return elements.get(elements.size() - 1);
     }
 
+    @Override
     public String toString() {
         return elements.toString();
     }
