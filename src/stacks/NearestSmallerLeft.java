@@ -12,8 +12,9 @@ import java.util.Arrays;
 * */
 public class NearestSmallerLeft {
     public static void main(String[] args) {
-        int[] A = {4, 5, 2, 3, 10, 8};
+        int[] A = {4, 5, 2, 3, 10, 8, 8};
         System.out.println(Arrays.toString(bruteForce(A)));
+        System.out.println(Arrays.toString(smallerLeft(A)));
     }
 
     public static int[] bruteForce(int[] A) {
@@ -32,4 +33,27 @@ public class NearestSmallerLeft {
 
         return answer;
     }
+
+    public static int[] smallerLeft(int[] A) {
+        int length = A.length;
+        int[] answers = new int[length];
+        Stack<Integer> minPossibilities = new Stack<>();
+        for (int i = 0; i < length; i++) {
+            int currElement = A[i];
+
+            while (!minPossibilities.isEmpty() && A[minPossibilities.peek()] >= currElement) {
+                minPossibilities.pop();
+            }
+            if (minPossibilities.isEmpty()) {
+                answers[i] = -1;
+            } else {
+                answers[i] = minPossibilities.peek();
+            }
+            minPossibilities.push(i);
+        }
+
+        return answers;
+    }
+
+
 }
