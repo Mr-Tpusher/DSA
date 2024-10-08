@@ -2,7 +2,7 @@ package queues;
 
 public class ArrayQueue {
     int head = 0;
-    int tail = - 1;
+    int tail = -1;
     int[] q;
     int SIZE;
     int count = 0;
@@ -28,7 +28,7 @@ public class ArrayQueue {
         if (isFull()) {
             throw new RuntimeException("OVERFLOW!");
         }
-        tail = (tail + 1) % SIZE ;
+        tail = (tail + 1) % SIZE;
         q[tail] = x;
         count++;
     }
