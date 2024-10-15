@@ -176,6 +176,19 @@ public class LinkedList<T> {
         return head;
     }
 
+    public LinkedList<T> clone() {
+        LinkedList<T> newList = new LinkedList<>();
+        if (head == null) {
+            return newList;
+        }
+        Node<T> curr = head;
+        while (curr != null) {
+            newList.insert(curr.getData());
+            curr = curr.getNext();
+        }
+        return newList;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("LinkedList{ ");
