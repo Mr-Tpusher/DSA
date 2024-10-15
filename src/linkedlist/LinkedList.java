@@ -11,6 +11,24 @@ public class LinkedList<T> {
         size = 0;
     }
 
+    public Node<T> populateLinkedList(T[] elements) {
+        int length = elements.length;
+        if (length < 1) {
+            head = null;
+        } else {
+            this.head = new Node<>(elements[0]);
+            size++;
+            Node<T> curr = head;
+            for (int i = 1; i < length; i++) {
+                curr.setNext(new Node<>(elements[i]));
+                curr = curr.getNext();
+                size++;
+            }
+            this.tail = curr;
+        }
+        return head;
+    }
+
     /*
     // This method inserts at the end by iterating over the linkedlist
     public void insert(T x) {
@@ -20,9 +38,9 @@ public class LinkedList<T> {
         } else {
             Node<T> temp = head;
             while (temp.next != null) {
-                temp = temp.next;
+                temp = temp.getNext();
             }
-            temp.next = newNode;
+            temp.setNext(newNode;
         }
         size++;
     }
@@ -34,7 +52,7 @@ public class LinkedList<T> {
         if (head == null) {
             this.head = newNode;
         } else {
-            this.tail.next = newNode;
+            this.tail.setNext(newNode);
         }
         this.tail = newNode;
         size++;
@@ -48,7 +66,7 @@ public class LinkedList<T> {
 
         if (index == 0) {
             // Insert at the start of the linkedlist
-            newNode.next = head;
+            newNode.setNext(head);
             head = newNode;
             if (tail == null) {
                 tail = newNode;
@@ -57,12 +75,12 @@ public class LinkedList<T> {
             // Insert anywhere else in the linkedlist
             Node<T> temp = head;
             int tempIndex = 0;
-            while (temp.next != null && tempIndex < index - 1) {
-                temp = temp.next;
+            while (temp.getNext() != null && tempIndex < index - 1) {
+                temp = temp.getNext();
                 tempIndex++;
             }
-            newNode.next = temp.next;
-            temp.next = newNode;
+            newNode.setNext(temp.getNext());
+            temp.setNext(newNode);
         }
         size++;
         if (index == size - 1) {
@@ -73,10 +91,10 @@ public class LinkedList<T> {
     public boolean search(T x) {
         Node<T> temp = head;
         while (temp != null) {
-            if (temp.data.equals(x)) {
+            if (temp.getData().equals(x)) {
                 return true;
             }
-            temp = temp.next;
+            temp = temp.getNext();
         }
         return false;
     }
@@ -88,26 +106,26 @@ public class LinkedList<T> {
 
         if (index == 0) {
             Node<T> element = head;
-            head = head.next;
+            head = head.getNext();
             size--;
-            return element.data;
+            return element.getData();
         }
 
         int tempIndex = 0;
         Node<T> temp = head;
         while (tempIndex < index - 1) {
-            temp = temp.next;
+            temp = temp.getNext();
             tempIndex++;
         }
-        Node<T> element = temp.next;
-        temp.next = temp.next.next;
+        Node<T> element = temp.getNext();
+        temp.setNext(temp.getNext().getNext());
 
-        if (temp.next == null) {
+        if (temp.getNext() == null) {
             tail = temp;
         }
 
         size--;
-        return element.data;
+        return element.getData();
     }
 
     public T delete(T data) {
@@ -115,32 +133,32 @@ public class LinkedList<T> {
             return null;
         }
 
-        if (head.data.equals(data)) {
+        if (head.getData().equals(data)) {
             Node<T> element = head;
-            head = head.next;
+            head = head.getNext();
             size--;
             if (head == null) {
                 tail = null;
             }
-            return element.data;
+            return element.getData();
         }
 
         Node<T> temp = head;
-        while (temp.next != null && !temp.next.data.equals(data)) {
-            temp = temp.next;
+        while (temp.getNext() != null && !temp.getNext().getData().equals(data)) {
+            temp = temp.getNext();
         }
         // Element not found
-        if (temp.next == null) {
+        if (temp.getNext() == null) {
             return null;
         }
 
-        Node<T> element = temp.next;
-        temp.next = temp.next.next;
-        if (temp.next == null) {
+        Node<T> element = temp.getNext();
+        temp.setNext(temp.getNext().getNext());
+        if (temp.getNext() == null) {
             tail = temp;
         }
         size--;
-        return element.data;
+        return element.getData();
     }
 
 
@@ -149,30 +167,11 @@ public class LinkedList<T> {
         StringBuilder sb = new StringBuilder("LinkedList{ ");
         Node<T> current = head;
         while (current != null) {
-            sb.append(current.data).append(" ");
-            current = current.next;
+            sb.append(current.getData()).append(" ");
+            current = current.getNext();
         }
         sb.append("}, size=").append(size).append('}');
         return sb.toString();
-    }
-
-
-    private static class Node<T> {
-        private T data;
-        private Node<T> next;
-
-        public Node(T data) {
-            this.data = data;
-            next = null;
-        }
-        
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "data=" + data +
-                    ", next=" + next +
-                    '}';
-        }
     }
 }
 
