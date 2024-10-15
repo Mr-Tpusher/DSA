@@ -161,6 +161,20 @@ public class LinkedList<T> {
         return element.getData();
     }
 
+    public Node<T> reverse() {
+        Node<T> prev, next;
+        prev = next = null;
+        Node<T> curr = head;
+
+        while (curr != null) {
+            next = curr.getNext();
+            curr.setNext(prev);
+            prev = curr;
+            curr = next;
+        }
+        head = prev;
+        return head;
+    }
 
     @Override
     public String toString() {
