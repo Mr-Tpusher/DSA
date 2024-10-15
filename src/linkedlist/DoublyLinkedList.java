@@ -55,6 +55,37 @@ public class DoublyLinkedList<T> {
         size++;
     }
 
+    public T removeAtIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+
+        DllNode<T> curr = head;
+        for (int i = 0; i < index - 1; i++) {
+            curr = curr.next;
+        }
+        T data = curr.next.data;
+
+        curr.next = curr.next.next;
+        if (curr.next != null) {
+            curr.next.prev = curr;
+        }
+        size--;
+        return data;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder("DLL (size=" + size + ") = { ");
+        DllNode<T> curr = head;
+        while (curr != null) {
+            sb.append(curr.data).append(" ");
+            curr = curr.next;
+        }
+        sb.append("}");
+
+        return sb.toString();
+    }
+
 
     static class DllNode<T> {
         DllNode<T> prev;
@@ -66,5 +97,24 @@ public class DoublyLinkedList<T> {
             this.prev = null;
             this.next = null;
         }
+    }
+}
+
+class DoublyLinkedListMain {
+    public static void main(String[] args) {
+        DoublyLinkedList<Integer> dll = new DoublyLinkedList<>();
+        dll.insertAtIndex(5, 0);
+        System.out.println(dll);
+        dll.insertAtIndex(4, 0);
+        System.out.println(dll);
+        dll.insertAtIndex(3, 1);
+        dll.insertAtIndex(13, 3);
+        dll.insert(10);
+        dll.insert(11);
+        System.out.println(dll);
+        dll.removeAtIndex(3);
+        System.out.println(dll);
+
+
     }
 }
