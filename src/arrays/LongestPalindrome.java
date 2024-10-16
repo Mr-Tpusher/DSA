@@ -5,12 +5,13 @@ package arrays;
 * */
 public class LongestPalindrome {
     public static void main(String[] args) {
-        int[] A = {1, 4, 3, 4, 2, 4, 3, 9};
-        System.out.println(solve1(A));
-        System.out.println(solve2(A));
+        int[] A = {1, 4, 3, 4, 2, 3, 4, 10, 2, 4, 3, 9};
+        System.out.println(longestPalindromeUsingBruteForce(A));
+        System.out.println(longestPalindromeUsingTwoPointers(A));
+        System.out.println(solveByExpandingAcrossCenter(A));
     }
 
-    public static int solve1(int[] A) {
+    public static int longestPalindromeUsingBruteForce(int[] A) {
         int length = A.length;
         if (length == 0) return 0;
 
@@ -29,7 +30,7 @@ public class LongestPalindrome {
         return max;
     }
 
-    public static int solve2(int[] A) {
+    public static int longestPalindromeUsingTwoPointers(int[] A) {
         int length = A.length;
         if (length == 0) return 0;
 
@@ -45,10 +46,10 @@ public class LongestPalindrome {
     }
 
     public static boolean isPalindrome(int[] A) {
-        int length = A.length;
         int start = 0;
-        int end = length - 1;
-        while (start < length) {
+        int end = A.length - 1;
+
+        while (start < end) {
             if (A[start] != A[end]) {
                 return false;
             }
@@ -59,8 +60,7 @@ public class LongestPalindrome {
     }
 
     public static boolean isPalindrome2(int[] A, int start, int end) {
-        int length = end - start + 1;
-        while (start < length) {
+        while (start < end) {
             if (A[start] != A[end]) {
                 return false;
             }
@@ -68,5 +68,29 @@ public class LongestPalindrome {
             end--;
         }
         return true;
+    }
+
+    public static int solveByExpandingAcrossCenter(int[] A) {
+        int length = A.length;
+        int max = 0;
+        for (int i = 0; i < length; i++) {
+            int length1 = getPalindromeLength(A, i - 1, i + 1);
+            int length2  = getPalindromeLength(A, i, i + 1);
+            max = Math.max(max,Math.max(length1,length2));
+        }
+        return max;
+    }
+
+    public static int getPalindromeLength(int[] A, int left, int right) {
+
+        while (left >= 0 && right < A.length) {
+            if (A[left] != A[right])
+                break;
+            left--;
+            right++;
+        }
+        return right - left - 1;
+        // -1 because the pointers would've gone extra step towards left and right
+        // before exiting the loop
     }
 }
