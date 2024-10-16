@@ -9,10 +9,31 @@ import java.util.HashMap;
 public class LongestPalindromicList {
     public static void main(String[] args) {
         LinkedList<Integer> ll = new LinkedList<>();
-        Node<Integer> head = ll.populateLinkedList(new Integer[]{ 1,2,2,7,1});
+        Node<Integer> head = ll.populateLinkedList(new Integer[]{1, 2, 1, 2, 1, 6, 7});
         System.out.println(ll);
         int length = palindromeLengthUsingExpansionAcrossCenter(head);
         System.out.println(length);
+        System.out.println(getPalindromeLengthWithoutUsingExtraSpace(head));
+    }
+
+    public static int getPalindromeLengthWithoutUsingExtraSpace(Node<Integer> head) {
+        // The idea here is to achieve the reversal in place.
+
+        Node<Integer> revHead, prev, curr;
+        revHead = prev = null;
+        curr = head;
+        int palindromeLength = 0;
+        while (curr != null) {
+            int length1 = getPalindromeLength(revHead, curr);
+            int length2 = 1 + getPalindromeLength(revHead, curr.getNext());
+            palindromeLength = Math.max(palindromeLength, Math.max(length1, length2));
+
+            prev = curr;
+            curr = curr.getNext();
+            prev.setNext(revHead);
+            revHead = prev;
+        }
+        return palindromeLength;
     }
 
     public static int palindromeLengthUsingExpansionAcrossCenter(Node<Integer> head) {
