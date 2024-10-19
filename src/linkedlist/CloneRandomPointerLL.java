@@ -15,6 +15,44 @@ public class CloneRandomPointerLL {
 
     }
 
+    public static RandomPointerNode<Integer> clone(RandomPointerNode<Integer> head) {
+        if (head == null) {
+            return null;
+        }
+
+        // Step 1: Create cloned nodes and attach next to original nodes
+        RandomPointerNode<Integer> curr = head;
+        while (curr != null) {
+            RandomPointerNode<Integer> next = curr.next;
+            curr.next = new RandomPointerNode<>(curr.val);
+            curr.next.next = next;
+            curr = next;
+        }
+
+        // Step 2: Set the random pointers for the cloned nodes
+        RandomPointerNode<Integer> ogPrev = head;
+        curr = head.next; // cloned head
+        while (curr != null) {
+            curr.random = (ogPrev.random != null) ? ogPrev.random.next : null;
+            ogPrev = curr.next;
+            curr = (ogPrev != null) ? ogPrev.next : null; // Move to the next cloned node
+        }
+
+        // Step 3: Separate the cloned list from the original list
+        RandomPointerNode<Integer> clonedHead = head.next;
+        ogPrev = head;
+        curr = clonedHead;
+        while (curr != null) {
+            RandomPointerNode<Integer> next = curr.next;
+            ogPrev.next = next; // Restore original next pointer
+            curr.next = next.next; // Restore cloned next pointer
+
+            ogPrev = ogPrev.next; // Move to the next original node
+            curr = curr.next; // move to the next cloned node
+        }
+        return clonedHead;
+    }
+
     public static RandomPointerNode<Integer> cloneWithMap(RandomPointerNode<Integer> head) {
 
         RandomPointerNode<Integer> curr = head;
