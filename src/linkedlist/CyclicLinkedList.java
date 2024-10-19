@@ -14,16 +14,33 @@ public class CyclicLinkedList {
         head.getNext().getNext().getNext().getNext().getNext().getNext().setNext(cycleStartingPointer);
 
         System.out.println(checkCycleUsingHashing(head));
+        System.out.println(checkCycleUsingSlowFastPointer(head));
 
     }
 
     public static boolean checkCycleUsingHashing(Node<Integer> head) {
-        HashSet<Node> nodes = new HashSet<>();
+        HashSet<Node<Integer>> nodes = new HashSet<>();
         Node<Integer> curr = head;
         while (curr != null) {
             if (!nodes.add(curr))
                 return true;
             curr = curr.getNext();
+        }
+        return false;
+    }
+
+    public static boolean checkCycleUsingSlowFastPointer(Node<Integer> head) {
+        if (head == null || head.getNext() == null) return false;
+        Node<Integer> slow = head;
+        Node<Integer> fast = head.getNext();
+
+        while (fast != null && fast.getNext() != null) {
+            if (slow.equals(fast)) {
+                return true;
+            }
+
+            slow = slow.getNext();
+            fast = fast.getNext().getNext();
         }
         return false;
     }
