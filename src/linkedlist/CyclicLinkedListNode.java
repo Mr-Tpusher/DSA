@@ -15,6 +15,9 @@ public class CyclicLinkedListNode {
 
         Node<Integer> cycleHead = getCycleHead(head);
         System.out.println(cycleHead == null ? null : cycleHead.getData());
+
+        Node<Integer> cycleHead2 = getCycleHeadUsingSlowFastPointer(head);
+        System.out.println(cycleHead2 == null ? null : cycleHead2.getData());
     }
 
     public static Node<Integer> getCycleHead(Node<Integer> head) {
@@ -24,6 +27,28 @@ public class CyclicLinkedListNode {
             if (!nodes.add(curr))
                 return curr;
             curr = curr.getNext();
+        }
+        return null;
+    }
+
+    public static Node<Integer> getCycleHeadUsingSlowFastPointer(Node<Integer> head) {
+        if (head == null || head.getNext() == null) return null;
+        Node<Integer> slow = head;
+        Node<Integer> fast = head.getNext();
+
+        while (fast != null && fast.getNext() != null) {
+            if (slow.equals(fast)) {
+                Node<Integer> curr = head;
+                slow = slow.getNext();
+                while (!curr.equals(slow)) {
+                    curr = curr.getNext();
+                    slow = slow.getNext();
+                }
+                return curr;
+            } else {
+                slow = slow.getNext();
+                fast = fast.getNext().getNext();
+            }
         }
         return null;
     }
