@@ -37,8 +37,6 @@ public class BTNode<T> {
 
     @Override
     public String toString() {
-        return "BTNode{" +
-                "value=" + value +
-                '}';
+        return "{" + value +"}";
     }
 }
