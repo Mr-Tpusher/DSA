@@ -34,4 +34,11 @@ public class BTNode<T> {
     public void setRight(BTNode<T> right) {
         this.right = right;
     }
+
+    @Override
+    public String toString() {
+        return "BTNode{" +
+                "value=" + value +
+                '}';
+    }
 }
