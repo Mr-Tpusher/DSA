@@ -1,8 +1,5 @@
 package trees;
 
-import linkedlist.Node;
-
-import javax.print.attribute.standard.NumberOfInterveningJobs;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -27,6 +24,10 @@ public class OddEvenLevels {
         BTNode<Integer> root = constructBT();
         int ans = solve1(root);
         System.out.println(ans);
+
+        // Recursive
+        int ans2 = solveRecursively(root, 1);
+        System.out.println(ans2);
     }
 
     // we can achieve this using simple level order traversal, where we also store
@@ -55,6 +56,23 @@ public class OddEvenLevels {
         }
 
         return difference;
+    }
+
+    public static int solveRecursively(BTNode<Integer> root, int level) {
+        if (root == null) {
+            return 0;
+        }
+
+        int currentValue = 0;
+        if (level % 2 == 0) {
+            currentValue -= root.getValue();
+        } else {
+            currentValue += root.getValue();
+        }
+
+        return currentValue +
+            solveRecursively(root.getLeft(), level + 1) +
+            solveRecursively(root.getRight(), level + 1);
     }
 
 
