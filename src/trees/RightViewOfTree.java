@@ -20,8 +20,15 @@ import java.util.ArrayList;
 public class RightViewOfTree {
     public static void main(String[] args) {
         BTNode<Integer> root = constructBT();
+
+        // Iterative
         ArrayList<Integer> rightView = getRightView(root);
         System.out.println(rightView);
+
+        // Recursive
+        ArrayList<Integer> rightView2 = new ArrayList<>();
+        getRightViewRecursively(root, new int[]{-1}, 0, rightView2);
+        System.out.println(rightView2);
 
     }
     // right view is basically level order traversal where we are printing the last node.
@@ -51,6 +58,20 @@ public class RightViewOfTree {
             currQueue = nextQueue;
         }
         return rightView;
+    }
+
+    public static void getRightViewRecursively(BTNode<Integer> root, int[] globalLevel, int currLevel,
+                                               ArrayList<Integer> rightView) {
+        if (root == null) {
+            return;
+        }
+
+        if (currLevel > globalLevel[0]) {
+            rightView.add(root.getValue());
+            globalLevel[0] = currLevel;
+        }
+        getRightViewRecursively(root.getRight(), globalLevel, currLevel + 1, rightView);
+        getRightViewRecursively(root.getLeft(), globalLevel, currLevel + 1, rightView);
     }
 
 
