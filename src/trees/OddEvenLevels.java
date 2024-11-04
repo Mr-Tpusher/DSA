@@ -28,6 +28,9 @@ public class OddEvenLevels {
         // Recursive
         int ans2 = solveRecursively(root, 1);
         System.out.println(ans2);
+
+        int ans3 = solveRecursively2(root);
+        System.out.println(ans3);
     }
 
     // we can achieve this using simple level order traversal, where we also store
@@ -71,9 +74,21 @@ public class OddEvenLevels {
         }
 
         return currentValue +
-            solveRecursively(root.getLeft(), level + 1) +
-            solveRecursively(root.getRight(), level + 1);
+                solveRecursively(root.getLeft(), level + 1) +
+                solveRecursively(root.getRight(), level + 1);
     }
+
+    public static int solveRecursively2(BTNode<Integer> root) {
+        if (root == null) {
+            return 0;
+        }
+
+        return root.getValue() -
+                solveRecursively2(root.getLeft()) -
+                solveRecursively2(root.getRight());
+    }
+
+
 
 
     public static BTNode<Integer> constructBT() {
