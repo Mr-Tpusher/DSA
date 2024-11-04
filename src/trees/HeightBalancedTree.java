@@ -1,29 +1,49 @@
 package trees;
 
-import linkedlist.Node;
-
 import java.util.HashMap;
 import java.util.Map;
 
 /*
-* Given a tree, return true if every node of the tree is height balanced.
-*
-*                     1
-*                   /   \
-*                 2      3
-*               /  \    /
-*             4     5  6
-*                 /  \
-*               7     8
-* ans: true
-* */
+ * Given a tree, return true if every node of the tree is height balanced.
+ *
+ *                     1
+ *                   /   \
+ *                 2      3
+ *               /  \    /
+ *             4     5  6
+ *                 /  \
+ *               7     8
+ * ans: true
+ * */
 public class HeightBalancedTree {
     public static void main(String[] args) {
         BTNode<Integer> root = constructBT();
+
+        System.out.println(checkBalance1(root));
+        System.out.println(checkBalance2(root).isBalanced);
+    }
+
+    private static HeightAndIsBalanced checkBalance2(BTNode<Integer> root) {
+
+        if (root == null) {
+            return new HeightAndIsBalanced(-1, true);
+        }
+
+        HeightAndIsBalanced left = checkBalance2(root.getLeft());
+        HeightAndIsBalanced right = checkBalance2(root.getRight());
+
+        boolean currIsBalanced = (Math.abs(left.height - right.height) <= 1) &&
+                left.isBalanced && right.isBalanced;
+        int currHeight = Math.max(left.height, right.height) + 1;
+
+        return new HeightAndIsBalanced(currHeight, currIsBalanced);
+    }
+
+    public static boolean checkBalance1(BTNode<Integer> root) {
+
         Map<BTNode<Integer>, Integer> heightsMap = new HashMap<>();
         getHeights(root, heightsMap);
-        System.out.println(isHeightBalanced(root, heightsMap));
-
+        return isHeightBalanced(root, heightsMap);
 
     }
 
@@ -77,5 +97,16 @@ public class HeightBalancedTree {
         five.setRight(eight);
 
         return one;
+    }
+
+    static class HeightAndIsBalanced {
+        int height;
+        boolean isBalanced;
+
+        public HeightAndIsBalanced(int height, boolean isBalanced) {
+            this.height = height;
+            this.isBalanced = isBalanced;
+        }
+
     }
 }
