@@ -1,5 +1,7 @@
 package bst;
 
+import java.util.ArrayList;
+
 public class BinarySearchTree {
 
     BSTNode<Integer> root;
@@ -53,6 +55,22 @@ public class BinarySearchTree {
         } else {
             return searchRecursively(root.getRight(), value);
         }
+    }
+
+    public ArrayList<Integer> inOrderTraversal() {
+        ArrayList<Integer> inorder = new ArrayList<>();
+        recursiveInorder(root, inorder);
+        return inorder;
+    }
+
+    private void recursiveInorder(BSTNode<Integer> root, ArrayList<Integer> inorder) {
+        if (root == null) {
+            return;
+        }
+
+        recursiveInorder(root.getLeft(), inorder);
+        inorder.add(root.getValue());
+        recursiveInorder(root.getRight(), inorder);
     }
 }
 
