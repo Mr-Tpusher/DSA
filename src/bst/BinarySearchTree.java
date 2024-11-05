@@ -25,4 +25,14 @@ public class BinarySearchTree {
         }
         return node;
     }
+
+    public BSTNode<Integer> buildBST(int[] input) {
+        if (input == null) {
+            return root;
+        }
+        for (int value : input) {
+            root = insert(value);
+        }
+        return root;
+    }
 }
