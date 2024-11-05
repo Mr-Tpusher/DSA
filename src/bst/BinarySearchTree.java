@@ -35,4 +35,24 @@ public class BinarySearchTree {
         }
         return root;
     }
+
+    public boolean search(int value) {
+        return searchRecursively(root, value);
+    }
+
+
+    private boolean searchRecursively(BSTNode<Integer> root, int value) {
+        if (root == null) {
+            return false;
+        }
+        if (value == root.getValue()) {
+            return true;
+        }
+        if (value < root.getValue()) {
+            return searchRecursively(root.getLeft(), value);
+        } else {
+            return searchRecursively(root.getRight(), value);
+        }
+    }
 }
+
