@@ -2,7 +2,7 @@ package bst;
 
 public class BSTNode<T> {
     private T value;
-    BSTNode<T> left;
+    private BSTNode<T> left;
     private BSTNode<T> right;
 
     public BSTNode(T value) {
