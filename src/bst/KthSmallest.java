@@ -18,6 +18,7 @@ public class KthSmallest {
         BSTNode<Integer> root = bst.buildBST(new int[] {3,1,4,2});
         System.out.println(getKthSmallestUsingInorder(bst,2));
 
+        System.out.println(getKthSmallestRecursively(root,2, new int[]{0}));
     }
 
     public static Integer getKthSmallestUsingInorder(BinarySearchTree bst, int k) {
@@ -28,6 +29,22 @@ public class KthSmallest {
         if (k > inorder.size())
             return null;
         return inorder.get(k - 1);
+    }
+
+    public static Integer getKthSmallestRecursively(BSTNode<Integer> root, int k, int[] currIndex) {
+        if (root == null) {
+            return null;
+        }
+
+        Integer leftAnswer = getKthSmallestRecursively(root.getLeft(), k, currIndex);
+        if (leftAnswer != null)
+            return leftAnswer;
+
+        currIndex[0] = currIndex[0] + 1;
+        if (k == currIndex[0])
+            return root.getValue();
+
+        return getKthSmallestRecursively(root.getRight(), k, currIndex);
     }
 }
 
