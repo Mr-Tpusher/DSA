@@ -9,7 +9,30 @@ public class LeastCommonAncestorBT {
         BTNode<Integer> root = buildBST();
 
         System.out.println(getLcaBT(root,7,5));
+        System.out.println(getLcaBT2(root,7,5));
     }
+
+    private static Integer getLcaBT2(BTNode<Integer> root, int first, int second) {
+        // use postorder traversal
+        if (root == null)
+            return null;
+
+        if (root.getValue() == first || root.getValue() == second)
+            return root.getValue();
+
+        Integer leftLCA = getLcaBT2(root.getLeft(), first, second);
+        Integer rightLCA = getLcaBT2(root.getRight(), first, second);
+
+        if (leftLCA != null && rightLCA != null) {
+            return root.getValue();
+        }
+        if (leftLCA == null)
+            return rightLCA;
+        else
+            return leftLCA;
+    }
+
+
 
     public static Integer getLcaBT(BTNode<Integer> root, int a, int b) {
         ArrayList<Integer> ancestors1 = getAncestors(root, a);
