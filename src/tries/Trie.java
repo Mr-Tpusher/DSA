@@ -10,6 +10,9 @@ public class Trie {
         root = new TrieNode();
     }
 
+    public TrieNode getRoot() {
+        return root;
+    }
 
     public void insert(String word) {
         TrieNode currNode = root;
