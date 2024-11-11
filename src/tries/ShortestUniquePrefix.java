@@ -15,7 +15,30 @@ public class ShortestUniquePrefix {
         for (String s : output) {
             System.out.println(s);
         }
+
+
+        String[] output2 = shortestUniquePrefixUsingTrie(input);
+        for (String s : output2) {
+            System.out.println(s);
+        }
     }
+
+    public static String[] shortestUniquePrefixUsingTrie(String[] input) {
+        Trie trie = new Trie();
+
+        for (String s : input) {
+            trie.insert(s);
+        }
+
+        String[] output = new String[input.length];
+        for (int i = 0; i < input.length; i++) {
+            output[i] = trie.getShortestPrefix(input[i]);
+        }
+        return output;
+    }
+
+
+
 
     public static String[] bruteForce(String[] input) {
         int length = input.length;
