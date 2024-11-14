@@ -3,21 +3,21 @@ package heaps;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public class MaxHeap {
+public class MinHeap {
     private int capacity;
     private int size;
     private int[] heap;
 
-    public MaxHeap() {
+    public MinHeap() {
         this(10);
     }
-    public MaxHeap(int capacity) {
+    public MinHeap(int capacity) {
         this.capacity = capacity;
         this.heap = new int[capacity];
         this.size = 0;
     }
 
-    public MaxHeap(int[] input) {
+    public MinHeap(int[] input) {
         this.heap = Arrays.copyOf(input, input.length);
         this.capacity = input.length;
         this.size = input.length;
@@ -61,7 +61,7 @@ public class MaxHeap {
     }
 
     public void bubbleUp(int i) {
-        while (i > 0 && heap[i] > heap[getParent(i)]) {
+        while (i > 0 && heap[i] < heap[getParent(i)]) {
             swap(i, getParent(i));
             i = getParent(i);
         }
@@ -71,31 +71,31 @@ public class MaxHeap {
         while (true) {
             int leftChild = getLeftChild(i);
             int rightChild = getRightChild(i);
-            int largest = i;
+            int smallest = i;
 
-            if (leftChild < size && heap[leftChild] > heap[largest]) {
-                largest = leftChild;
+            if (leftChild < size && heap[leftChild] < heap[smallest]) {
+                smallest = leftChild;
             }
-            if (rightChild< size && heap[rightChild] > heap[largest]) {
-                largest = rightChild;
+            if (rightChild< size && heap[rightChild] < heap[smallest]) {
+                smallest = rightChild;
             }
 
-            if (largest == i)
+            if (smallest == i)
                 break;
 
-            swap(i, largest);
-            i = largest;
+            swap(i, smallest);
+            i = smallest;
         }
     }
 
-    public int peekMax() {
+    public int peekMin() {
         if (isEmpty())
             throw new NoSuchElementException("Heap is empty");
 
         return heap[0];
     }
 
-    public int deleteMax() {
+    public int deleteMin() {
         if (isEmpty())
             throw new NoSuchElementException("Heap is empty");
 
