@@ -11,19 +11,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-/*
-* ropes = {5, 17, 100, 11}
-* knot1 = 5+17=22               tc=22
-* ropes = {22, 100, 11}
-* knot2 = 22+100=122            tc=22+122=144
-* ropes = {122,11}
-* knot3 = 133                   tc=277
-*
-* */
 public class NRopes {
     public static void main(String[] args) {
         Integer[] ropes = {5, 17, 100, 11};
         System.out.println(bruteForce(ropes));
+        System.out.println(solve(new int[] {5, 17, 100, 11}));
 
     }
 
@@ -43,5 +35,18 @@ public class NRopes {
 
         System.out.println(al);
         return cost;
+    }
+
+
+    public static int solve(int[] ropes) {
+        MinHeap minHeap = new MinHeap(ropes);
+
+        int totalCost = 0;
+        while (minHeap.getSize() > 1) {
+            int currentKnotCost = minHeap.deleteMin() + minHeap.deleteMin();
+            totalCost += currentKnotCost;
+            minHeap.insert(currentKnotCost);
+        }
+        return totalCost;
     }
 }
