@@ -19,7 +19,19 @@ import java.util.Arrays;
 public class BulbSwitch {
     public static void main(String[] args) {
         int[] bulbs = {0, 1, 0, 0, 1};
+        System.out.println(getPressedSwitches(bulbs));
         System.out.println(bruteForce(bulbs));
+    }
+
+    public static int getPressedSwitches(int[] bulbs) {
+        int switchesPressed = 0;
+        for (int i = 0; i < bulbs.length; i++) {
+            if (((bulbs[i] == 1) && (switchesPressed % 2 == 1)) ||
+                    ((bulbs[i] == 0) && (switchesPressed % 2 == 0))) {
+                switchesPressed++;
+            }
+        }
+        return switchesPressed;
     }
 
     public static int bruteForce(int[] bulbs) {
