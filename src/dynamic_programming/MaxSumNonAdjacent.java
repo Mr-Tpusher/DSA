@@ -13,6 +13,17 @@ public class MaxSumNonAdjacent {
     public static void main(String[] args) {
         int[] A = {2, 3, 5, 0, 7, 10};
         System.out.println(maxSumRecursive(A));
+        System.out.println(maxSumIterative(A));
+    }
+
+    private static int maxSumIterative(int[] A) {
+        int  prevMax = 0, prevToPrevMax = 0;
+        for (int i = 0; i < A.length; i++) {
+            int currMax = Math.max(prevMax, A[i] + prevToPrevMax);
+            prevToPrevMax = prevMax;
+            prevMax = currMax;
+        }
+        return prevMax;
     }
 
     public static int maxSumRecursive(int[] A) {
@@ -22,6 +33,10 @@ public class MaxSumNonAdjacent {
     }
 
     private static int maxSumRecursive(int[] A, int[] maxSums, int index) {
+        if (A.length == 0) {
+            return 0;
+        }
+
         if (index < 0) {
             return 0;
         }
