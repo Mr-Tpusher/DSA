@@ -10,9 +10,32 @@ import java.util.ArrayList;
 * */
 public class LongestIncreasingSubsequence {
     public static void main(String[] args) {
-        int[] A = {0, 8, 4, 12, 10, 6, 14, 1, 9, 5, 13};
+        int[] A = {0, 8, 4, 12, 10, 6, 14, 1, 9, 5, 13, 14, 15 ,16, 17};
         System.out.println(bruteForce(A));
+        System.out.println(solve(A));
 
+    }
+
+    public static int solve(int[] A) {
+        int[] LIS = new int[A.length];
+        LIS[0] = 1;
+
+        for (int i = 1; i < A.length; i++) {
+            int max = 1;
+            for (int j = 0; j < i; j++) {
+                if (A[i] > A[j]) {
+                    int currMax = 1 + LIS[j];
+                    max = Math.max(max, currMax);
+                }
+            }
+            LIS[i] = max;
+        }
+
+        int ans = 0;
+        for (int i = 0; i < LIS.length; i++) {
+            ans = Math.max(ans, LIS[i]);
+        }
+        return ans;
     }
 
     public static int bruteForce(int[] A) {
@@ -23,7 +46,7 @@ public class LongestIncreasingSubsequence {
         for (ArrayList<Integer> sub : subSequences) {
             if (isIncreasing(sub)) {
                 max = Math.max(max, sub.size());
-                System.out.println(sub);
+                //System.out.println(sub);
             }
         }
         return max;
@@ -42,7 +65,6 @@ public class LongestIncreasingSubsequence {
                                   ArrayList<ArrayList<Integer>> subSequences) {
         if (index == A.length) {
             subSequences.add(new ArrayList<>(subSeq));
-            //subSeq = new ArrayList<>();
             return;
         }
 
