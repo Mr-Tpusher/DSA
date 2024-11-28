@@ -26,6 +26,7 @@ public class CoinSum {
         int R = 5;
         System.out.println(bruteForce(A, R));
         System.out.println(bruteForce2(A, R));
+        System.out.println(coinSumRecursive(A, R));
     }
 
     // Brute force approach where we calculate all the possible combinations
@@ -57,6 +58,27 @@ public class CoinSum {
         return count;
     }
 
+    public static int coinSumRecursive(int[] A, int R) {
+        int[] dp = new int[R + 1];
+        return coinSumRecursive(A, R, dp);
+    }
+
+    private static int coinSumRecursive(int[] A, int R, int[] dp) {
+        if (R == 0) {
+            return 1;
+        }
+
+        if (dp[R] != 0) {
+            return dp[R];
+        }
+
+        for (int i = 0; i < A.length; i++) {
+            if (A[i] <= R) {
+                dp[R] += coinSumRecursive(A, R - A[i], dp);
+            }
+        }
+        return dp[R];
+    }
 
     public static void bruteForce(int[] A, int R, ArrayList<ArrayList<Integer>> totalWays,
                                   ArrayList<Integer> ways) {
