@@ -1,25 +1,19 @@
 package dynamic_programming;
-
-import javax.print.attribute.standard.NumberOfInterveningJobs;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 /*
-* Given an array A of distinct elements, which denotes the denomination of currency, and
-* we have unlimited supply of this currency.
-* Given an integer R, find total number of ways to sum R.
-* A = {1, 3, 4}     R = 5
-* ways:
-*       1,1,1,1,1
-*       1,1,3
-*       1,3,1
-*       3,1,1
-*       1,4
-*       4,1
-* Answer:6
-*
-*
-* */
+ * Given an array A of distinct elements, which denotes the denomination of currency, and
+ * we have unlimited supply of this currency.
+ * Given an integer R, find total number of ways to sum R.
+ * A = {1, 3, 4}     R = 5
+ * ways:
+ *       1,1,1,1,1
+ *       1,1,3
+ *       1,3,1
+ *       3,1,1
+ *       1,4
+ *       4,1
+ * Answer:6
+ * */
 public class CoinSum {
     public static void main(String[] args) {
         int[] A = {1, 3, 4};
