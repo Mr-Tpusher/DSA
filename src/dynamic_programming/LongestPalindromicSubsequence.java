@@ -13,7 +13,33 @@ public class LongestPalindromicSubsequence {
         String s = "acdajfadfakj";
         System.out.println(bruteForce(s, 0, s.length() - 1));
         System.out.println(solveRecursively(s));
+        System.out.println(solveIteratively(s));
     }
+
+    public static int solveIteratively(String s) {
+        int length = s.length();
+        int[][] dp = new int[length][length];
+
+        // Base case: all subsequences of length 1 are palindromes of length 1
+        for (int i = 0; i < length; i++) {
+            dp[i][i] = 1;
+        }
+
+        // fill dp matrix for length - 2 to n
+        for (int l = 2; l <= length; l++) { // l = subsequence length
+            for (int i = 0; i <= length - l; i++) {
+                int j = i + l - 1;
+
+                if (s.charAt(i) == s.charAt(j)) {
+                    dp[i][j] = 2 + (l > 2 ? dp[i + 1][j - 1] : 0);
+                } else {
+                    dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[0][length - 1];
+    }
+
 
     public static int solveRecursively(String s) {
         int[][] dp = new int[s.length()][s.length()];
