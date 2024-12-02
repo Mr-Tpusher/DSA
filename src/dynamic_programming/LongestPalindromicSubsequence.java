@@ -31,7 +31,7 @@ public class LongestPalindromicSubsequence {
                 int j = i + l - 1;
 
                 if (s.charAt(i) == s.charAt(j)) {
-                    dp[i][j] = 2 + (l > 2 ? dp[i + 1][j - 1] : 0);
+                    dp[i][j] = 2 +  dp[i + 1][j - 1];
                 } else {
                     dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
                 }
