@@ -1,9 +1,6 @@
 package dynamic_programming;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 /*
 Given a matrix of integers A of size N x 2 describing dimensions of N envelopes,
@@ -26,12 +23,13 @@ public class RussianDollEnvelopes {
 
         System.out.println(bruteForce(envelopes));
 
+        System.out.println(dpSolve(envelopes));
+
     }
 
     // The idea here is to sort the envelopes based on their height, and then iterate
     // over each one by one checking if previous height and width was lesser.
     // we are essentially choosing the elements greedily
-
     public static int bruteForce(ArrayList<Envelope> envelopes) {
         // This brute force won't work since we are greedily choosing the next envelope.
         // It might very well happen that next envelope is not the best choice
@@ -46,7 +44,32 @@ public class RussianDollEnvelopes {
         }
         return count;
     }
+
+
+// using dp - idea is simple
+// 1. sort based on height inc then width dec
+// 2. find LIS of width - if height is equal then skip, because largest
+    public static int dpSolve(ArrayList<Envelope> envelopes) {
+        int[] dp = new int[envelopes.size() + 1];
+        // every element itself is LIS of size 1
+        Arrays.fill(dp, 1);
+
+        for (int i = 0; i < envelopes.size(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (envelopes.get(i).width > envelopes.get(j).width) {
+                    dp[i] = Math.max(dp[i], 1 + dp[j]);
+                }
+            }
+        }
+
+        int max = 0;
+        for (int i = 0; i < dp.length; i++) {
+            max = Math.max(max, dp[i]);
+        }
+        return max;
+    }
 }
+
 
 class Envelope {
     int height;
@@ -78,7 +101,7 @@ class Envelope {
             if (e1.height != e2.height) {
                 return Integer.compare(e1.height, e2.height);
             } else {
-                return Integer.compare(e1.width, e2.width);
+                return Integer.compare(e2.width, e1.width);
             }
         }
     };
