@@ -1,4 +1,7 @@
 package dynamic_programming;
+
+import java.util.Arrays;
+
 /*
 * Find the count of N digit numbers, with digit sum = S
 * e.g. N = 2, S = 4
@@ -7,9 +10,10 @@ package dynamic_programming;
 public class NDigitNumber {
     public static void main(String[] args) {
         int N = 4;
-        int S = 25;
+        int S = 4;
         System.out.println(bruteForce(N, S));
         System.out.println(recursiveBruteForce(N, S));
+        System.out.println(dpSolution(N, S));
     }
 
 
@@ -53,5 +57,32 @@ public class NDigitNumber {
         }
         return count;
     }
+
+    public static int dpSolution(int N, int S) {
+        int[][] dp = new int[N + 1][S + 1];
+        for (int[] arr : dp) {
+            Arrays.fill(arr, -1);
+        }
+
+        return dpSolution(N, S, dp);
+    }
+
+    public static int dpSolution(int N, int S, int[][] dp) {
+        if (N == 1 && 1 <= S && S <= 9) return 1;
+        if (N == 1 && S > 9) return 0;
+        if (N <= 0 || S <= 0) return 0;
+
+        if (dp[N][S] != -1) {
+            return dp[N][S];
+        }
+
+        int count = 0;
+        for (int i = 0; i <= 9; i ++) {
+            count += dpSolution(N - 1, S - i, dp);
+        }
+        dp[N][S] = count;
+        return count;
+    }
+
 
 }
