@@ -1,5 +1,8 @@
 package dynamic_programming;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /*
  * Given N toys, which have happiness value H and weight W, total bag capacity C.
  * Find the max Happiness.
@@ -12,6 +15,7 @@ public class ToyStore {
         int C = 7;
 
         System.out.println(bruteForce(H, W, 0, C));
+        System.out.println(recursiveDp(H, W, 0, C));
 
 
     }
@@ -31,5 +35,36 @@ public class ToyStore {
         int rejected = bruteForce(H, W, index + 1, remainingCap);
 
         return Math.max(selected, rejected);
+    }
+
+    public static int recursiveDp(int[] H, int[] W, int index, int remainingCap) {
+        int[][] dp = new int[W.length + 1][remainingCap + 1];
+        for (int[] arr : dp) {
+            Arrays.fill(arr, -1);
+        }
+
+       return recursiveDp(H, W, dp, index, remainingCap);
+    }
+
+    public static int recursiveDp(int[] H, int[] W, int[][] dp, int index, int remainingCap) {
+        if (remainingCap < 0 || index >= W.length) {
+            return 0;
+        }
+
+        if (dp[index][remainingCap] != -1) {
+            return dp[index][remainingCap];
+        }
+        // select the element
+        int selected = 0;
+        if (W[index] <= remainingCap) {
+            selected = H[index] + recursiveDp(H, W, dp, index + 1, remainingCap - W[index]);
+        }
+
+        // reject the element
+        int rejected = recursiveDp(H, W, dp, index + 1, remainingCap);
+
+        int ans = Math.max(selected, rejected);
+        dp[index][remainingCap] = ans;
+        return ans;
     }
 }
