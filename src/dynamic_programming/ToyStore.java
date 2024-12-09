@@ -16,6 +16,7 @@ public class ToyStore {
 
         System.out.println(bruteForce(H, W, 0, C));
         System.out.println(recursiveDp(H, W, 0, C));
+        System.out.println(iterativeDp(H, W, C));
 
 
     }
@@ -66,5 +67,21 @@ public class ToyStore {
         int ans = Math.max(selected, rejected);
         dp[index][remainingCap] = ans;
         return ans;
+    }
+
+    public static int iterativeDp(int[] H, int[] W, int capacity) {
+        // 1 - based indexed dp array
+        int[][] dp = new int[W.length + 1][capacity + 1];
+        for (int i = 1; i <= H.length; i++) {
+            for (int j = 1; j <= capacity; j++) {
+                if (j - W[i - 1] >= 0) {
+                    dp[i][j] = Math.max(dp[i - 1][j] ,
+                            dp[i - 1][j - W[i - 1]] + H[i - 1]);
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        return dp[W.length][capacity];
     }
 }
