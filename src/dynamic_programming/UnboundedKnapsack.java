@@ -1,5 +1,6 @@
 package dynamic_programming;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class UnboundedKnapsack {
@@ -9,6 +10,7 @@ public class UnboundedKnapsack {
         int cap = 8;
 
         System.out.println(solve1(H, W, cap));
+        System.out.println(solve2(H, W, cap));
     }
 
     public static int solve1(int[] H, int[] W, int cap) {
@@ -29,5 +31,21 @@ public class UnboundedKnapsack {
             System.out.println(Arrays.toString(arr));
         }
         return dp[W.length][cap];
+    }
+
+    public static int solve2(int[] H, int[] W, int capacity) {
+        int[] dp = new int[capacity + 1];
+        Arrays.fill(dp, 0);
+
+        // Iterate over each item
+        for (int i = 0; i < W.length; i++) {
+            // For each item, update the dp array for all capacities from W[i] to capacity
+            for (int j = W[i]; j <= capacity; j++) {
+                dp[j] = Math.max(dp[j], dp[j - W[i]] + H[i]);
+            }
+        }
+
+        // dp[capacity] will have the maximum value achievable for the given capacity
+        return dp[capacity];
     }
 }
