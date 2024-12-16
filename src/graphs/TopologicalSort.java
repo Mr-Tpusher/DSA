@@ -33,10 +33,12 @@ public class TopologicalSort {
         DirectAcyclicGraph dag = new DirectAcyclicGraph(A, B);
         ArrayList<Integer> ans = dag.topologicalSortUsingInDegree();
         System.out.println(ans);
+
+        System.out.println(dag.topologicalSortUsingStacks());
     }
 
-    private  static class DirectAcyclicGraph {
-        private  HashMap<Integer, List<Integer>> adjList;
+    private static class DirectAcyclicGraph {
+        private HashMap<Integer, List<Integer>> adjList;
 
         DirectAcyclicGraph(int A, int[][] B) {
             adjList = new HashMap<>();
@@ -49,6 +51,52 @@ public class TopologicalSort {
                 int dest = edge[1];
                 adjList.get(src).add(dest);
             }
+        }
+
+
+        // Not 100% correct
+        ArrayList<Integer> topologicalSortUsingStacks() {
+            HashSet<Integer> visited = new HashSet<>();
+            Stack<Integer> stack = new Stack<>();
+            HashSet<Integer> currStack = new HashSet<>();
+
+
+            PriorityQueue<Integer> queue = new PriorityQueue<>(Comparator.reverseOrder());
+            for (Integer node : adjList.keySet()) {
+                queue.add(node);
+                }
+
+            //for (Integer node : adjList.keySet()) {
+            while (!queue.isEmpty()) {
+                Integer node = queue.poll();
+                if (!visited.contains(node)) {
+                    if (dfs(node, stack, visited, currStack) == false)
+                        return new ArrayList<>();
+                }
+            }
+            ArrayList<Integer> output = new ArrayList<>();
+            while (!stack.isEmpty()) {
+                output.add(stack.pop());
+            }
+            return output;
+        }
+
+        boolean dfs(Integer node, Stack<Integer> stack, HashSet<Integer> visited, HashSet<Integer> currStack) {
+            visited.add(node);
+            currStack.add(node);
+            List<Integer> neighbours = adjList.get(node);
+            Collections.sort(neighbours, Collections.reverseOrder());
+            for (Integer neighbour : neighbours) {
+                if (currStack.contains(neighbour)) {
+                    return false;
+                }
+                if (!visited.contains(neighbour))
+                    if (dfs(neighbour, stack, visited, currStack) == false)
+                        return false;
+            }
+            stack.push(node);
+            currStack.remove(node);
+            return true;
         }
 
         ArrayList<Integer> topologicalSortUsingInDegree() {
