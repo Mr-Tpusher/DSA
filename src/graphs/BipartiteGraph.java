@@ -54,7 +54,7 @@ public class BipartiteGraph {
 
             for (Integer node : adjList.keySet()) {
                 if (!visited.containsKey(node)) {
-                    if (dfs(node, null, visited, "black") == 0) {
+                    if (dfs(node, visited, "black") == 0) {
                         return 0;
                     }
                 }
@@ -62,22 +62,20 @@ public class BipartiteGraph {
             return 1;
         }
 
-        int dfs(Integer node, Integer parent, HashMap<Integer, String> visited, String colour) {
+        int dfs(Integer node, HashMap<Integer, String> visited, String colour) {
             visited.put(node, colour);
 
             for (Integer neighbour : adjList.get(node)) {
-                if (neighbour != parent) {
-                    String neighbourColour;
-                    if (!visited.containsKey(neighbour)) {
-                        neighbourColour = colour.equals("black") ? "white" : "black";
-                        if (dfs(neighbour, node, visited, neighbourColour) == 0) {
-                            return 0;
-                        }
-                    } else {
-                        neighbourColour = visited.get(neighbour);
-                        if (colour.equals(neighbourColour)) {
-                            return 0;
-                        }
+                String neighbourColour;
+                if (!visited.containsKey(neighbour)) {
+                    neighbourColour = colour.equals("black") ? "white" : "black";
+                    if (dfs(neighbour, visited, neighbourColour) == 0) {
+                        return 0;
+                    }
+                } else {
+                    neighbourColour = visited.get(neighbour);
+                    if (colour.equals(neighbourColour)) {
+                        return 0;
                     }
                 }
             }
