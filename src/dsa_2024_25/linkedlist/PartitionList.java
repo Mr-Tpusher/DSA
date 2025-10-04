@@ -11,10 +11,10 @@ public class PartitionList {
     public static void main(String[] args) {
         LinkedList<Integer> ll = new LinkedList<>();
         Node<Integer> head = ll.populateLinkedList(new Integer[] {2, 9, 1, 1, 3, 8, 4, 2, 1});
-        util.LinkedList.printLL(head);
+        dsa_2024_25.util.LinkedList.printLL(head);
         int k = 3;
         Node<Integer> partitionedListNode = partition(head, 3);
-        util.LinkedList.printLL(partitionedListNode);
+        dsa_2024_25.util.LinkedList.printLL(partitionedListNode);
 
     }
 

@@ -1,6 +1,6 @@
 package dsa_2024_25.dynamic_programming;
 
-import util.Array;
+import dsa_2024_25.util.Array;
 
 import java.util.Arrays;
 

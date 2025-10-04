@@ -4,8 +4,8 @@ package dsa_2024_25.permutations;
  * when duplicates are present
  * */
 
-import util.Number;
-import util.ValueFrequency;
+import dsa_2024_25.util.Number;
+import dsa_2024_25.util.ValueFrequency;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
 package dsa_2024_25.stacks;
 
-import util.Pair;
+import dsa_2024_25.util.Pair;
 
 /*
 * Given a string s and a number k, everytime we iterate over the string and find k same characters,

@@ -4,7 +4,7 @@ package dsa_2024_25.backtracking;
 * find all permutations
 * */
 
-import util.ValueFrequency;
+import dsa_2024_25.util.ValueFrequency;
 import java.util.ArrayList;
 
 public class ArrayPermutations2 {

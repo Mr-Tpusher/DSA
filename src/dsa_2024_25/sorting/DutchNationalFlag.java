@@ -2,7 +2,7 @@ package dsa_2024_25.sorting;
 
 import java.util.Arrays;
 
-import static util.Array.swap;
+import static dsa_2024_25.util.Array.swap;
 
 /*
 * Given an array, which contains only 3 elements 0,1,2; sort the array.

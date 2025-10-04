@@ -1,6 +1,6 @@
 package dsa_2024_25.util;
 
-import linkedlist.Node;
+import dsa_2024_25.linkedlist.Node;
 
 public class LinkedList {
     public static void printLL(Node<Integer> head) {

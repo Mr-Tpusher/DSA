@@ -1,7 +1,5 @@
 package dsa_2024_25.greedy_algos;
 
-import trees.MirrorTrees;
-
 import java.util.ArrayList;
 
 /*

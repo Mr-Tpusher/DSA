@@ -5,8 +5,9 @@ public class BubbleSort {
         LinkedList<Integer> ll = new LinkedList<>();
         Node<Integer> head = ll.populateLinkedList(new Integer[] {8, 2, 9, 1, 3, 4, 10});
         //Node<Integer> head = ll.populateLinkedList(new Integer[] {2, 3, 2, 1, 3});
-        util.LinkedList.printLL(head);
-        util.LinkedList.printLL(bubbleSort(head));
+
+        dsa_2024_25.util.LinkedList.printLL(head);
+        dsa_2024_25.util.LinkedList.printLL(bubbleSort(head));
     }
 
     public static Node<Integer> bubbleSort(Node<Integer> head) {

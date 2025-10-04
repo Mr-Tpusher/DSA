@@ -1,6 +1,6 @@
 package dsa_2024_25.bst;
 
-import trees.BTNode;
+import dsa_2024_25.trees.BTNode;
 import java.util.ArrayList;
 import java.util.Objects;
 

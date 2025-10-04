@@ -1,6 +1,6 @@
 package dsa_2024_25.sorting;
 
-import util.Timer;
+import dsa_2024_25.util.Timer;
 
 public class BubbleSort {
     public static void main(String[] args) {

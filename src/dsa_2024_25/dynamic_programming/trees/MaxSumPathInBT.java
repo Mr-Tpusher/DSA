@@ -1,6 +1,7 @@
-package dynamic_programming.trees;
+package dsa_2024_25.dynamic_programming.trees;
 
-import trees.BTNode;
+
+import dsa_2024_25.trees.BTNode;
 
 /*
 Given a binary tree T, find the maximum path sum.

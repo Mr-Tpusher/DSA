@@ -4,9 +4,9 @@ public class MergeSort {
     public static void main(String[] args) {
         LinkedList<Integer> ll = new LinkedList<>();
         Node<Integer> head = ll.populateLinkedList(new Integer[] {2, 9, 1, 3, 4, 2, 9});
-        util.LinkedList.printLL(head);
+        dsa_2024_25.util.LinkedList.printLL(head);
         head = mergeSort(head);
-        util.LinkedList.printLL(head);
+        dsa_2024_25.util.LinkedList.printLL(head);
 
     }
 

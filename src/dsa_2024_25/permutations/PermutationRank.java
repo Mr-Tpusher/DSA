@@ -3,7 +3,7 @@ package dsa_2024_25.permutations;
 * Given a permutation, give it's rank.
 * */
 
-import util.Number;
+import dsa_2024_25.util.Number;
 
 import java.util.Arrays;
 
