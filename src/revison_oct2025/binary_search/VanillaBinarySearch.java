@@ -1,4 +1,4 @@
-package revison_oct2025;
+package revison_oct2025.binary_search;
 
 public class VanillaBinarySearch {
     public static void main(String[] args) {
