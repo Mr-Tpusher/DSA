@@ -9,29 +9,27 @@ public class AllSubsetsWithSumLessThanK {
         // backtrack1
         ArrayList<Integer> subset = new ArrayList<>();
         ArrayList<ArrayList<Integer>> allSubsets = new ArrayList<>();
-        backtrack(arr, 0, subset, allSubsets, 5);
+        backtrack(arr, 0, subset, allSubsets, 5, 0);
         System.out.println(allSubsets);
 
     }
 
     public static void backtrack(int[] arr, int index, ArrayList<Integer> subset,
-                                 ArrayList<ArrayList<Integer>> allSubsets, int k) {
+                                 ArrayList<ArrayList<Integer>> allSubsets, int k, int sum) {
 
-        if (index == arr.length) {
-            int sum = 0;
-            for (Integer i : subset) {
-                sum += i;
-                if (sum > k) {
-                    return;
-                }
-            }
-            allSubsets.add(new ArrayList<>(subset));
+        // Pruning
+        if (sum > k) {
             return;
         }
 
-        backtrack(arr, index + 1, subset, allSubsets, k);
+        if (index == arr.length) {
+
+            allSubsets.add(new ArrayList<>(subset));
+            return;
+        }
+        backtrack(arr, index + 1, subset, allSubsets, k, sum);
         subset.add(arr[index]);
-        backtrack(arr, index + 1, subset, allSubsets, k);
+        backtrack(arr, index + 1, subset, allSubsets, k, sum + arr[index]);
         subset.remove(Integer.valueOf(arr[index]));
     }
 
