@@ -1,4 +1,4 @@
-package revison_oct2025.sorting;
+package revison_oct2025.sorting.merge_sort;
 
 import java.util.Arrays;
 
