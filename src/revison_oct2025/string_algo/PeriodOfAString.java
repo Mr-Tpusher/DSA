@@ -9,14 +9,57 @@ package revison_oct2025.string_algo;
 public class PeriodOfAString {
     public static void main(String[] args) {
         String s1 = "abcaabcaabca";
-        System.out.println(solution1(s1));
+        System.out.println(findSmallestPeriodWithZAlgo(s1));
 
         String s2 = "abcabcabcabc";
-        System.out.println(solution1(s2));
+        System.out.println(findSmallestPeriodWithZAlgo(s2));
 
         String s3 = "abcdsedfdfdjjakjkdjfd";
-        System.out.println(solution1(s3));
+        System.out.println(findSmallestPeriodWithZAlgo(s3));
 
+    }
+
+    static int findSmallestPeriodWithZAlgo(String s) {
+        if (s.isEmpty()) {
+            return 0;
+        }
+        // find z array of the string
+        int[] z = new int[s.length()];
+        z[0] = s.length();
+        int left = 0, right = 0;
+        for (int i = 1; i < s.length(); i++) {
+            if (right < i) {
+                // do brute force to find prefix match
+                right = i;
+                left = i;
+                while (right < s.length() && s.charAt(right - left) == s.charAt(right)) {
+                    right++;
+                }
+                z[i] = right - left;
+                right--;
+            } else {
+                // j is the matching index for i from the prefix of window
+                int j = i - left;
+                // when the answer is well within the boundary
+                if (z[j] < right - i + 1) {
+                    z[i] = z[j];
+                } else {
+                    // start a new window
+                    left = i;
+                    while (right < s.length() && s.charAt(right - left) == s.charAt(right)) {
+                        right++;
+                    }
+                    z[i] = right - left;
+                    right--;
+                }
+            }
+        }
+
+        for (int i = 1; i < z.length; i++) {
+            if (i + z[i] == z.length)
+                return i;
+        }
+        return s.length();
     }
 
     static int solution1(String s) {
@@ -28,7 +71,7 @@ public class PeriodOfAString {
                 }
             }
         }
-        return 0;
+        return s.length();
     }
 
     static boolean isPeriodOfString(String s, int patternLength) {
