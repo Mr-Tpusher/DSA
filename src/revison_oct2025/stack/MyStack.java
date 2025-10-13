@@ -1,12 +1,12 @@
 package revison_oct2025.stack;
 
 public class MyStack {
-    private int[] items;
-    private int size;
+    private final int[] items;
+    private final int size;
     private int head = -1;
 
     public MyStack() {
-        new MyStack(10);
+        this(10);
     }
     public MyStack(int size) {
         this.size = size;
@@ -35,5 +35,18 @@ public class MyStack {
         if (isEmpty())
             throw new RuntimeException("Underflow");
         return items[head];
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("stack : [");
+        for (int i = 0; i <= head; i++) {
+            sb.append(items[i]);
+            if (i < head)
+                sb.append(", ");
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }
