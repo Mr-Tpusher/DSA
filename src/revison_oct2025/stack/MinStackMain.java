@@ -42,6 +42,9 @@ public class MinStackMain {
         }
 
         int getMinVersion1() {
+            if (isEmpty())
+                return -1;
+
             int min = Integer.MAX_VALUE;
 
             while (!stack1.isEmpty()) {
