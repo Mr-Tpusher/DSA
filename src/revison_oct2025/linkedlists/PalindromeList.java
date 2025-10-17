@@ -9,8 +9,45 @@ public class PalindromeList {
         ListNode one2 = new ListNode(1);
         one1.next = two;
         two.next = one2;
+//        LinkedListUtil.printLL(one1);
+//        System.out.println(isPalindrome(one1) == 1? "true" : "false");
+
+        ListNode three = new ListNode(3);
+        one2.next = three;
         LinkedListUtil.printLL(one1);
-        System.out.println(isPalindrome(one1) == 1? "true" : "false");
+
+        System.out.println(isPalindromeBF(one1) == 1? "true" : "false");
+    }
+
+    static int isPalindromeBF(ListNode A) {
+        // copy the LL
+        ListNode dummy = new ListNode(0);
+        ListNode copyListTail = dummy;
+        ListNode ogListCurr = A;
+        while (ogListCurr != null) {
+            copyListTail.next = new ListNode(ogListCurr.val);
+            copyListTail = copyListTail.next;
+            ogListCurr = ogListCurr.next;
+        }
+
+        // reverse the linkedlist
+        ListNode prev = null, curr = dummy.next;
+        while (curr != null) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        ListNode reversedHead = prev;
+
+        while (A != null && reversedHead != null) {
+            if (A.val != reversedHead.val)
+                return 0;
+            A = A.next;
+            reversedHead = reversedHead.next;
+        }
+        return 1;
     }
 
     static int isPalindrome(ListNode A) {
