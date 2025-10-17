@@ -8,7 +8,7 @@ public class LongestPalindromicList {
         //ListNode head = LinkedListUtil.createSinglyLinkedList(new int[] {2, 2});
         LinkedListUtil.printLL(head);
 
-        System.out.println(getLongestPalindromicBF(head));
+        System.out.println(getLongestPalindrome(head));
 
 
     }
@@ -53,6 +53,34 @@ public class LongestPalindromicList {
         }
         return answer;
     }
+
+    /*
+    * Also expand from the centre approach but without the extra space
+    * TC: O(N^2)
+    * SC: O(1)
+    * */
+
+    static int getLongestPalindrome(ListNode head) {
+        //if (head == null) return 0;
+
+        ListNode prev = null, curr = head;
+        int answer = 0;
+        while (curr != null) {
+            int count1 = palindromeLength(prev, curr);
+            int count2 = palindromeLength(prev, curr.next) + 1;
+            answer = Math.max(answer, Math.max(count1, count2));
+
+            // move the pointers
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return answer;
+    }
+
+
+
 
     static int palindromeLength(ListNode head1, ListNode head2) {
         int count = 0;
