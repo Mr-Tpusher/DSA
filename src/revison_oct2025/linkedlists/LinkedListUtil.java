@@ -10,4 +10,14 @@ public class LinkedListUtil {
         }
         System.out.println();
     }
+
+    static ListNode createSinglyLinkedList(int[] arr) {
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+        for (int i = 0; i < arr.length; i++) {
+            curr.next = new ListNode(arr[i]);
+            curr = curr.next;
+        }
+        return dummy.next;
+    }
 }
