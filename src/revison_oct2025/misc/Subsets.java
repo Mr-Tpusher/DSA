@@ -6,7 +6,9 @@ public class Subsets {
     public static void main(String[] args) {
         int[] A = {1,2,3};
         ArrayList<ArrayList<Integer>> allSubsets = generateSubsetsUsingRecursion(A, 2);
-        System.out.println(allSubsets);
+        //System.out.println(allSubsets);
+
+        printSubsetsUsingBacktracking(A, 0, new ArrayList<>());
 
     }
 
@@ -29,6 +31,18 @@ public class Subsets {
 
         return subsetWithCurrentElement;
 
+    }
+
+    static void printSubsetsUsingBacktracking(int[] A, int index, ArrayList<Integer> ss) {
+        if (index == A.length) {
+            System.out.println(ss);
+            return;
+        }
+
+        printSubsetsUsingBacktracking(A, index + 1, ss);
+        ss.add(A[index]);
+        printSubsetsUsingBacktracking(A, index + 1, ss);
+        ss.remove(ss.size() - 1);
     }
 
 }
