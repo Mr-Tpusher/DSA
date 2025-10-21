@@ -9,4 +9,11 @@ public class BTNode {
         left = null;
         right = null;
     }
+
+    @Override
+    public String toString() {
+        return "BTNode{" +
+                 val +
+                '}';
+    }
 }
