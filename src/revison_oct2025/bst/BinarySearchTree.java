@@ -29,6 +29,11 @@ public class BinarySearchTree {
         System.out.println(inOrderTraversal(root, new ArrayList<Integer>()));
     }
 
+    static ArrayList<Integer> inOrderTraversal(BSTNode root) {
+        ArrayList<Integer> al = new ArrayList<>();
+        return inOrderTraversal(root, al);
+    }
+
     static ArrayList<Integer> inOrderTraversal(BSTNode root, ArrayList<Integer> bst) {
         if (root == null)
             return bst;
