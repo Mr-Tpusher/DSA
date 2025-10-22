@@ -17,6 +17,14 @@ public class BinarySearchTree {
 
     }
 
+    static BSTNode constructBST(int[] arr) {
+        BSTNode root = null;
+        for (int i : arr) {
+            root = insert(root, i);
+        }
+        return root;
+    }
+
     static void printBST(BSTNode root) {
         System.out.println(inOrderTraversal(root, new ArrayList<Integer>()));
     }
