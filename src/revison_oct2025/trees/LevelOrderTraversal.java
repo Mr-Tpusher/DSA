@@ -16,6 +16,7 @@ public class LevelOrderTraversal {
         root.right.right.right = new BTNode(8);
 
         System.out.println(levelOrderTraversal(root));
+        System.out.println(iterativeLevelOrder(root));
 
     }
 
@@ -34,5 +35,30 @@ public class LevelOrderTraversal {
                 queue.offer(curr.right);
         }
         return output;
+    }
+
+
+
+    static ArrayList<ArrayList<Integer>> iterativeLevelOrder(BTNode node) {
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        if (node == null)
+            return ans;
+
+        Queue<BTNode> queue = new LinkedList<>();
+        queue.offer(node);
+        while (!queue.isEmpty()) {
+            ArrayList<Integer> currLevel = new ArrayList<>();
+            int currLevelSize = queue.size();
+            for (int i = 0; i < currLevelSize; i++) {
+                BTNode temp = queue.poll();
+                currLevel.add(temp.val);
+                if (temp.left != null)
+                    queue.offer(temp.left);
+                if (temp.right != null)
+                    queue.offer(temp.right);
+            }
+            ans.add(currLevel);
+        }
+        return ans;
     }
 }
