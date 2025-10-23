@@ -49,4 +49,26 @@ public class BinaryTree {
         inOrderTraversal.add(root.val);
         inOrder(root.right, inOrderTraversal);
     }
+
+    static void printTree(BTNode root) {
+        printTreeHelper(root, 0);
+    }
+
+    // Helper function to print the tree with indentation
+    private static void printTreeHelper(BTNode node, int level) {
+        if (node == null) {
+            return;
+        }
+        // Print right subtree first (will appear on top)
+        printTreeHelper(node.right, level + 1);
+
+        // Print current node after spaces proportional to level
+        for (int i = 0; i < level; i++) {
+            System.out.print("    "); // 4 spaces per level
+        }
+        System.out.println(node.val);
+
+        // Print left subtree (will appear at bottom)
+        printTreeHelper(node.left, level + 1);
+    }
 }
