@@ -6,6 +6,7 @@ public class LCABinaryTree {
     public static void main(String[] args) {
         BTNode root = BinaryTree.buildTree(new int[] {1, 2, 3, 4, 5, -1, 6, 7, -1, -1, 8, -1, -1, -1, 9});
         System.out.println(lcaBruteForce(root, 7, 5));
+        System.out.println(getLca(root, 7, 5));
     }
 
     static int lcaBruteForce(BTNode root, int node1, int node2) {
@@ -41,5 +42,61 @@ public class LCABinaryTree {
             return false;
         }
         return true;
+    }
+
+    static int getLca(BTNode A, int B, int C) {
+        LcaResult lcaResult = new LcaResult();
+        lcaRecursive(A, B, C, lcaResult);
+        if (lcaResult.BFound && lcaResult.CFound)
+            return lcaResult.lca;
+        else
+            return -1;
+    }
+
+    static boolean lcaRecursive(BTNode A, int B, int C, LcaResult result) {
+        if (A == null)
+            return false;
+
+        boolean left = lcaRecursive(A.left, B, C, result);
+        boolean right = lcaRecursive(A.right, B, C, result);
+
+        // B and C are present in curr node's left and right subtrees
+        // so the current node is the LCA
+        if (left && right) {
+            result.lca = A.val;
+            return true;
+        }
+
+        // Either left or right had targets present
+        if (left || right) {
+            if (A.val == B || A.val == C) {
+                result.lca = A.val;
+                if (A.val == B)
+                    result.BFound = true;
+                else
+                    result.CFound = true;
+            } else {
+                return left ? left : right;
+            }
+        }
+
+        // neither left nor right had the target
+        if (A.val == B || A.val == C) {
+            if (!result.BFound && A.val == B)
+                result.BFound = true;
+            if (!result.CFound && A.val == C)
+                result.CFound = true;
+            result.lca = A.val;
+            return true;
+        }
+
+        return false;
+
+    }
+
+    static class LcaResult {
+        int lca = -1;
+        boolean BFound = false;
+        boolean CFound = false;
     }
 }
