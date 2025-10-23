@@ -1,6 +1,7 @@
 package revison_oct2025.trees;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /*
 * Given root of the tree and a node, find the path from the root to the node.
@@ -21,9 +22,12 @@ public class Path {
     public static void main(String[] args) {
         BTNode root = BinaryTree.buildTree(new int[] {1, 2, 3, 4, 5, -1, 6, 7, -1, -1, 8, -1, -1, -1, 9});
 
-        System.out.println(findPathPreOrder(root, 7));
-        System.out.println(findPathPreOrder(root, 8));
-        System.out.println(findPathPreOrder(root, 6));
+        System.out.println("find path using preorder: " + findPathPreOrder(root, 7));
+        System.out.println("find path using postorder: " + findPathPostOrder(root, 7));
+        System.out.println("find path using preorder: " + findPathPreOrder(root, 8));
+        System.out.println("find path using postorder: " + findPathPostOrder(root, 8));
+        System.out.println("find path using preorder: " + findPathPreOrder(root, 6));
+        System.out.println("find path using postorder: " + findPathPostOrder(root, 6));
     }
 
     static ArrayList<Integer> findPathPreOrder(BTNode root, int node) {
@@ -52,5 +56,41 @@ public class Path {
         }
         return true;
     }
+
+    static ArrayList<Integer> findPathPostOrder(BTNode root, int node) {
+        ArrayList<Integer> path = new ArrayList<>();
+        findPathPostOrderRec(root, node, path);
+        Collections.reverse(path);
+        return path;
+    }
+
+
+    private static boolean findPathPostOrderRec(BTNode curr, int node, ArrayList<Integer> path) {
+        if (curr == null)
+            return false;
+
+        /*
+            base case (pruning)
+            when we find the node
+                1. add it to the path
+                2. stop the recursion from going further down
+        *
+        * */
+        if (curr.val == node) {
+            path.add(curr.val);
+            return true;
+        }
+
+        // recurse left and right children
+        boolean left = findPathPostOrderRec(curr.left, node, path);
+        boolean right = findPathPostOrderRec(curr.right, node, path);
+
+        if (left || right) {
+            path.add(curr.val);
+            return true;
+        }
+        return false;
+    }
+
 
 }
