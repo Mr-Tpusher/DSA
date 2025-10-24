@@ -41,13 +41,44 @@ public class BinaryTree {
         return inOrderTraversal;
     }
 
-    static void inOrder(BTNode root, ArrayList<Integer> inOrderTraversal) {
-        if (root == null)
+    static void inOrder(BTNode node, ArrayList<Integer> inOrderTraversal) {
+        if (node == null)
             return;
 
-        inOrder(root.left, inOrderTraversal);
-        inOrderTraversal.add(root.val);
-        inOrder(root.right, inOrderTraversal);
+        inOrder(node.left, inOrderTraversal);
+        inOrderTraversal.add(node.val);
+        inOrder(node.right, inOrderTraversal);
+    }
+
+    static ArrayList<Integer> preOrder(BTNode root) {
+        ArrayList<Integer> preorder = new ArrayList<>();
+        preOrderHelper(root, preorder);
+        return preorder;
+    }
+
+    private static void preOrderHelper(BTNode node, ArrayList<Integer> preorder) {
+        if (node == null)
+            return;
+
+        preorder.add(node.val);
+        preOrderHelper(node.left, preorder);
+        preOrderHelper(node.right, preorder);
+    }
+
+
+    static ArrayList<Integer> postOrder(BTNode root) {
+        ArrayList<Integer> postorder = new ArrayList<>();
+        postOrderHelper(root, postorder);
+        return postorder;
+    }
+
+    private static void postOrderHelper(BTNode node, ArrayList<Integer> postorder) {
+        if (node == null)
+            return;
+
+        postOrderHelper(node.left, postorder);
+        postOrderHelper(node.right, postorder);
+        postorder.add(node.val);
     }
 
     static void printTree(BTNode root) {
