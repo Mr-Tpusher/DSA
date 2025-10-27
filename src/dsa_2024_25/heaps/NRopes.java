@@ -4,7 +4,7 @@ package dsa_2024_25.heaps;
 * cost means when we tie a knot of  a & b then cost of that know will be a+b
 * and the length of the new rope will be a+b.
 * ropes = {5, 17, 100, 11}
-* Answer(minimum cost) = 198
+* Answer(minimum cost) = 182
 * */
 
 import java.util.ArrayList;
