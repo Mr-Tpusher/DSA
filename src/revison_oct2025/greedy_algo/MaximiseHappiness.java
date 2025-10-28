@@ -1,7 +1,6 @@
-package revison_oct2025;
+package revison_oct2025.greedy_algo;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 /*
 * Given weight of cakes and their happiness value, choose cakes of weight w such that the happiness is maximised.
