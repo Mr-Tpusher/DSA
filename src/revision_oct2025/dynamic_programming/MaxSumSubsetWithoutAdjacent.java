@@ -1,5 +1,8 @@
 package revision_oct2025.dynamic_programming;
-
+/*
+* Given an array of integers, find the max sum from the array, without selecting adjacent elements.
+*
+* */
 import java.util.Arrays;
 
 public class MaxSumSubsetWithoutAdjacent {
@@ -7,6 +10,8 @@ public class MaxSumSubsetWithoutAdjacent {
         int[] A = {2, 3, 5, 0, 7, 10};
         bruteForce(A);
         maxSumDpRecursive(A);
+        System.out.println(maxSumDpIterative(A));
+
     }
 
     static void bruteForce(int[] A) {
@@ -22,6 +27,20 @@ public class MaxSumSubsetWithoutAdjacent {
         System.out.println(ans);
 
     }
+
+    static int maxSumDpIterative(int[] A) {
+        int[] dp = new int[A.length];
+        Arrays.fill(dp, Integer.MIN_VALUE);
+        dp[0] = A[0];
+        dp[1] = Math.max(A[0], A[1]);
+
+        for (int i = 2; i < A.length; i++) {
+            dp[i] = Math.max(A[i] + dp[i - 2], dp[i - 1]);
+        }
+
+        return dp[A.length - 1];
+    }
+
 
     static int maxSumDpRecursiveHelper(int[] A, int index, int[] dp) {
         if (index < 0) return 0;
