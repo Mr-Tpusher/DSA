@@ -8,6 +8,7 @@ public class LengthOfLongestIncreasingSubsequence {
         System.out.println(bruteForce(A));
         System.out.println(bruteForce2(A));
         System.out.println(dp1(A));
+        System.out.println(bottomUpDp(A));
 
     }
 
@@ -24,7 +25,8 @@ public class LengthOfLongestIncreasingSubsequence {
     static int dp1(int[] A) {
         /*
         * 1. Element of choice -> include or exclude current
-        * 2. dp state[i][j] -> the longest increasing subsequence with curr element at (i) and prev j - 1.
+        * 2. dp state[i][prevIndex + 1] -> LIS starting from index with prevIndex as the last included element
+        *   note : we are taking prevIndex + 1 , because prevIndex can start at -1.
         * */
 
         int[][] dp = new int[A.length][A.length + 1];
@@ -34,6 +36,29 @@ public class LengthOfLongestIncreasingSubsequence {
 
         return dp1Helper(A, dp, 0, -1);
 
+    }
+
+
+    static int bottomUpDp(int[] A) {
+        if (A == null || A.length == 0) return 0;
+        // here we can just consider the dp state to be
+        // dp[i] -> the longest increasing subsequence ending at i
+        // A = {1, 8, 2, 4}
+
+        int[] dp = new int[A.length];
+        Arrays.fill(dp, 1); // because every element in itself is an LIS
+        int answer = 1;
+
+        for (int i = 1; i < A.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (A[j] < A[i]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            answer = Math.max(answer, dp[i]);
+        }
+
+        return answer;
     }
 
     static int dp1Helper(int[] A, int[][] dp, int index, int prevIndex) {
@@ -63,7 +88,7 @@ public class LengthOfLongestIncreasingSubsequence {
         }
 
         for (int i = index; i < A.length; i++) {
-            if (A[i] >=  prev) {
+            if (A[i] >  prev) {
                 result.currLIS++;
                 bruteForceHelper(A, i + 1, A[i], result);
                 result.currLIS--;
