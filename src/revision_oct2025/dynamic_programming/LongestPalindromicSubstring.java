@@ -10,6 +10,7 @@ public class LongestPalindromicSubstring {
         String s = "agbdba";
         System.out.println(bruteForce(s));
         System.out.println(topDownDP(s));
+        System.out.println(bottomUpDP(s));
     }
 
     static int bruteForce(String s) {
@@ -21,6 +22,44 @@ public class LongestPalindromicSubstring {
 
         return topDownHelper(s, 0, s.length() - 1, memo).maxLength;
     }
+
+    static int bottomUpDP(String s) {
+        if (s == null || s.isEmpty()) return 0;
+
+        int n = s.length();
+        boolean[][] memo = new boolean[n][n];
+        int maxLength = 1;
+
+        // pre-populate strings of length 1
+        for (int i = 0; i < n; i++) {
+            memo[i][i] = true;
+        }
+
+        // pre-populate strings of length 2, because they cannot be calculated directly by depending on prev.
+        for (int i = 0; i < n - 1; i++) {
+            if (s.charAt(i) == s.charAt(i + 1)) {
+                memo[i][i + 1] = true;
+                maxLength = 2;
+            }
+        }
+
+        // fill the matrix diagonally i.e. length wise for length 3 onwards
+        // because substring of length l depends on the dp state of substrings of length (l - 1) and (l - 2).
+        for (int l = 3; l <= n; l++) {
+            for (int start = 0; start <= n - l; start++) {
+                int end = start + l - 1;
+
+                if (s.charAt(start) == s.charAt(end)) {
+                    memo[start][end] = memo[start + 1][end - 1];
+                    if (memo[start][end]) // if the inner substring is palindrome and current chars match
+                        maxLength = l;  // current substring is a palindrome
+                }
+            }
+        }
+
+        return maxLength;
+    }
+
 
     static Result topDownHelper(String s, int left, int right, Result[][] memo) {
 
