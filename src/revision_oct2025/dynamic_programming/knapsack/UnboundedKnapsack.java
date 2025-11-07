@@ -18,6 +18,7 @@ public class UnboundedKnapsack {
         maxHappinessBF(H, W, cap);
         topDownDPBinary(H, W, cap);
         topDownDPLoop(H, W, cap);
+        System.out.println(bottomUpDP(H, W, cap));
 
     }
 
@@ -40,6 +41,21 @@ public class UnboundedKnapsack {
         int[] dp = new int[cap + 1];
         Arrays.fill(dp, -1);
         System.out.println(topDownDPLoopHelper(H, W, cap, dp));
+    }
+
+    static int bottomUpDP(int[] H, int[] W, int cap) {
+        int n = H.length;
+        int[] dp = new int[cap + 1];
+
+        // iterate over each item
+        for (int i = 0;i < n; i++) {
+           // for each item update the dp array for each capacity
+           for (int j = W[i]; j <= cap; j++) {
+               if (j - W[i] >= 0)
+                dp[j] = Math.max(dp[j], H[i] + dp[j - W[i]]);
+           }
+        }
+        return dp[cap];
     }
 
 
