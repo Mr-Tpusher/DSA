@@ -18,6 +18,7 @@ public class ToysHappiness {
 
         System.out.println(bruteForce(H, W, cap));
         System.out.println(topDown(H, W, cap));
+        System.out.println(bottomUpDP(H, W, cap));
     }
 
     static int bruteForce(int[] H, int[] W, int cap) {
@@ -27,11 +28,37 @@ public class ToysHappiness {
     static int topDown(int[] H, int[] W, int cap) {
         int[][] dp = new int[H.length][cap + 1];
 
+        // dp[i][j] = max happiness from index i till end with remaining cap j.
+
         for (int[] row : dp) Arrays.fill(row, -1);
 
         topDownHelper(0, cap, H, W, dp);
 
         return dp[0][cap];
+    }
+
+    static int bottomUpDP(int[] H, int[] W, int cap) {
+        int n = H.length;
+        // 1-based indexing
+        int[][] dp = new int[n + 1][cap + 1];
+
+        // dp[i][j] = max happiness for first i elements (means till (i - 1)th index) where bag capacity is j.
+
+        for (int i = 1; i <= n; i++) {
+            for (int c = 1; c <= cap; c++) {
+                // select
+                int select = 0;
+
+                if (W[i - 1] <= c) {
+                    select = H[i - 1] + dp[i - 1][c - W[i - 1]];
+                }
+
+                int reject = dp[i - 1][c];
+
+                dp[i][c] = Math.max(select, reject);
+            }
+        }
+        return dp[n][cap];
     }
 
     static int topDownHelper(int index, int remCap, int[] H, int[] W, int[][] dp) {
