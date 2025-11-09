@@ -43,6 +43,12 @@ public class MinDistFromHospital {
         int[][] result2 = solve2(cityMap, rows, cols);
         for (int[] row : result2)
             System.out.println(Arrays.toString(row));
+        System.out.println();
+
+
+        int[][] result3 = multiSourceBfs(cityMap, rows, cols);
+        for (int[] row : result3)
+            System.out.println(Arrays.toString(row));
 
     }
 
@@ -142,6 +148,46 @@ public class MinDistFromHospital {
                 }
             }
         }
+    }
+
+
+    static int[][] multiSourceBfs(char[][] cityMap, int rows, int columns) {
+        Queue<Node> queue = new LinkedList<>();
+        boolean[][] visited = new boolean[rows][columns];
+        int[][] result = new int[rows][columns];
+
+        // add all the hospitals in the queue - these all will act as source i.e. multi source
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (cityMap[i][j] == 'H') {
+                    queue.offer(new Node(i, j, 0));
+                    visited[i][j] = true;
+                }
+            }
+        }
+
+        // start the bfs i.e. multi source bfs
+        while (!queue.isEmpty()) {
+            Node node = queue.poll();
+            int x = node.i;
+            int y = node.j;
+            int distance = node.distance;
+
+            if (cityMap[x][y] == 'R')
+                result[x][y] = distance;
+
+            // add neighbours from all four directions
+            for (int i = 0; i < 4; i++) {
+                int newX = x + rowDir[i];
+                int newY = y + colDir[i];
+
+                if (newX >= 0 && newX < rows && newY >= 0 && newY < columns && !visited[newX][newY]) {
+                    queue.offer(new Node(newX, newY, distance + 1));
+                    visited[newX][newY] = true;
+                }
+            }
+        }
+        return result;
     }
 
     static class Node {
