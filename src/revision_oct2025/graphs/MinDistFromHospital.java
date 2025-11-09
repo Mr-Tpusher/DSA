@@ -31,20 +31,23 @@ public class MinDistFromHospital {
                 {'R', 'H', 'H', 'R'}
         };
 
-        int[][] result = solve1(cityMap);
+        int rows = cityMap.length;
+        int cols = cityMap[0].length;
+
+        int[][] result = solve1(cityMap, rows, cols);
 
         for (int[] row : result)
+            System.out.println(Arrays.toString(row));
+        System.out.println();
+
+        int[][] result2 = solve2(cityMap, rows, cols);
+        for (int[] row : result2)
             System.out.println(Arrays.toString(row));
 
     }
 
-    static int[][] solve1(char[][] cityMap) {
-        int rows = cityMap.length;
-        int cols = cityMap[0].length;
+    static int[][] solve1(char[][] cityMap, int rows, int cols) {
         int[][] result = new int[rows][cols];
-
-        for (int[] row : result)
-            Arrays.fill(row, Integer.MAX_VALUE);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -84,6 +87,58 @@ public class MinDistFromHospital {
 
                 if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && !visited[newX][newY]) {
                     queue.offer(new Node(newX, newY, distance + 1));
+                    visited[newX][newY] = true;
+                }
+            }
+        }
+    }
+
+    static int[][] solve2(char[][] cityMap, int rows, int cols) {
+        // start from each hospital and mark distance for each residence from that hospital.
+        // if encountered again mark the min of the distances
+
+        int[][] result = new int[rows][cols];
+        for (int[] row : result)
+            Arrays.fill(row, Integer.MAX_VALUE);
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (cityMap[i][j] == 'H') {
+                    result[i][j] = 0;
+                    nearestResidencesFromHospitals(i, j, cityMap, result, rows, cols);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    // bfs from hospital at i,j to find every residence
+    static void nearestResidencesFromHospitals(int i, int j, char[][] cityMap, int[][] result, int rows, int cols) {
+
+        Queue<Node> queue = new LinkedList<>();
+        boolean[][] visited = new boolean[rows][cols];
+
+        queue.offer(new Node(i, j, 0));
+        visited[i][j] = true;
+
+        while (!queue.isEmpty()) {
+            Node node = queue.poll();
+            int x = node.i;
+            int y = node.j;
+            int distance = node.distance;
+
+            if (cityMap[x][y] == 'R') {
+                result[x][y] = Math.min(result[x][y], distance);
+            }
+
+            for (int k = 0; k < 4; k++) {
+                int newX = x + rowDir[k];
+                int newY = y + colDir[k];
+
+                if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && !visited[newX][newY]) {
+                    queue.add(new Node(newX, newY, distance + 1));
+                    visited[newX][newY] = true;
                 }
             }
         }
