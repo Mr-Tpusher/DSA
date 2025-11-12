@@ -12,7 +12,7 @@ import java.util.*;
 * */
 public class BFS {
     public static void main(String[] args) {
-        Graph graph = new Graph();
+        UndirectGraph graph = new UndirectGraph();
         graph.addEdge('A', 'B');
         graph.addEdge('A', 'C');
         graph.addEdge('A', 'D');
@@ -25,11 +25,12 @@ public class BFS {
         graph.addEdge('D', 'Z');
 
         graph.printGraph();
-        graph.bfs();
+        graph.bfs('A');
+        graph.bfs('Z');
 
     }
 
-    private static class Graph {
+    private static class UndirectGraph {
         Map<Character, Set<Character>> adjList = new HashMap<>();
 
         void addEdge(char src, char dest) {
@@ -44,11 +45,7 @@ public class BFS {
             System.out.println(adjList);
         }
 
-        void bfs() {
-            bfsHelper('A');
-        }
-
-        void bfsHelper(char src) {
+        void bfs(char src) {
             Queue<Character> queue = new LinkedList<>();
             Set<Character> visited = new HashSet<>();
 
@@ -67,6 +64,7 @@ public class BFS {
                     }
                 }
             }
+            System.out.println();
         }
     }
 }
