@@ -82,6 +82,7 @@ public class PrimsAlgo {
 
             PriorityQueue<Edge> minHeap = new PriorityQueue<>(Comparator.comparingInt(edge -> edge.weight));
             Set<Integer> visited = new HashSet<>();
+            List<Edge> mst = new LinkedList<>();
 
             minHeap.add(new Edge(src, src, 0));
             //visited.add(src);
@@ -96,6 +97,9 @@ public class PrimsAlgo {
                     totalWeight += weight;
                     visited.add(destination);
 
+                    if (minEdge.src != minEdge.destination) // to skip adding src node (we are adding edges, not nodes)
+                        mst.add(minEdge);
+
                     // add all neighbours of destination in the min heap
                     for (int i = 1; i <= N; i++) {
                         if (!visited.contains(i) && adjMat[destination][i] != Integer.MAX_VALUE && destination != i) {
@@ -104,6 +108,7 @@ public class PrimsAlgo {
                     }
                 }
             }
+            System.out.println(mst);
             return totalWeight;
         }
 
@@ -116,6 +121,15 @@ public class PrimsAlgo {
                 this.src = src;
                 this.destination = destination;
                 this.weight = weight;
+            }
+
+            @Override
+            public String toString() {
+                return "Edge{" +
+                        "src=" + src +
+                        ", destination=" + destination +
+                        ", weight=" + weight +
+                        '}';
             }
         }
 
